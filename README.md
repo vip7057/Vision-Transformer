@@ -9,13 +9,18 @@ This repository implements the building blocks of visual transformers (LightViT)
 
 ---
 
-The standard Transformer receives as input a 1D
-sequence of token embeddings. To handle 2D images, we reshape the image x ∈ R(H×W×C) into a
-sequence of flattened 2D patches xp ∈R(N×(P^2·C))
-- , where (H, W) is the resolution of the original image, 
-- C is the number of channels, 
-- (P, P) is the resolution of each image patch, 
-- and N = HW/P^2 is the resulting number of patches, which also serves as the effective input sequence length for the Transformer.
-- The Transformer uses constant latent vector size D through all of its layers, 
-- so we flatten the patches and map to D dimensions with a trainable linear projection (Eq. 1). 
-- We refer to the output of this projection as the patch embeddings.
+## 1. Image Patches and Linear Mapping
+
+### A) Image Patches
+Transfomers were initially created to process sequential data. In case of images, a sequence can be created through extracting patches. To do so, a crop window should be used with a defined window height and width. The dimension of data is originally in the format of *(B,C,H,W)*, when transorfmed into patches and then flattened we get *(B, PxP, (HxC/P)x(WxC/P))*, where *B* is the batch size and *PxP* is total number of patches in an image. In this example, P=7. 
+
+
+*Output*: A function that extracts image patches. The output format should have a shape of (B,49,16). The function will be used inside *LightViT* class.
+
+### B) Linear Mapping
+
+Afterwards, the input are mapped using a linear layer to an output with dimension *d* i.e. *(B, PxP, (HxC/P)x(WxC/P))* &rarr; *(B, PxP, d)*. The variable d can be freely chosen, however, we set here to 8. 
+
+*Output*: A linear layer should be added inside *LightViT* class with the correct input and output dimensions, the output from the linear layer should have a dimension of (B,49,8). 
+
+---
