@@ -7,3 +7,15 @@ Transformers have been studied in the context of sequence-to-sequence modelling 
 
 This repository implements the building blocks of visual transformers (LightViT). Afterwards, trains them on classification task using MNIST and Fashion-MNIST datasets.
 
+---
+
+The standard Transformer receives as input a 1D
+sequence of token embeddings. To handle 2D images, we reshape the image x ∈ R(H×W×C) into a
+sequence of flattened 2D patches xp ∈R(N×(P^2·C))
+- , where (H, W) is the resolution of the original image, 
+- C is the number of channels, 
+- (P, P) is the resolution of each image patch, 
+- and N = HW/P^2 is the resulting number of patches, which also serves as the effective input sequence length for the Transformer.
+- The Transformer uses constant latent vector size D through all of its layers, 
+- so we flatten the patches and map to D dimensions with a trainable linear projection (Eq. 1). 
+- We refer to the output of this projection as the patch embeddings.
