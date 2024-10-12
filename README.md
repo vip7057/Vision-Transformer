@@ -66,6 +66,8 @@ The final part of implemeting a transformer is adding a classification head to t
 
 ---
 ## 5a. Model Training for MNIST
+Checkout the ipynb file in the repository for complete implemetation in Pytorch.
 
 ---
 ## 5b. Model Training for FashionMNIST
+Checkout the ipynb file in the repository for complete implemetation in Pytorch.
